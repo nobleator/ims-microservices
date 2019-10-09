@@ -1,0 +1,243 @@
+@page "{id:int}"
+@model TransactionModel
+@using web.Enums
+@{
+    ViewData["Title"] = "Transaction";
+}
+@section Scripts
+{
+    <script src="~/js/transaction.js"></script>
+}
+
+<!-- <div id="siteDetails_modal" title="Site Details">
+    <div class="row">
+        <div class="col-6">
+            <select id="modalSelectBox"
+                    name="modalSelectBox"
+                    class="col-sm-10 form-control">
+                <option value="">Add new site</option>
+                @foreach (var site in Model.SelectableSites)
+                {
+                    @if (Model.Transaction.AssociatedSite.SiteId.ToString() == site.Value)
+                    {
+                        <option selected="selected" value="@site.Value">
+                            @site.Text
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@site.Value">
+                            @site.Text
+                        </option>
+                    }
+                }
+            </select>
+
+            <input id="modalTempSiteId" readonly type="hidden" name="TempSiteId" value="@Model.Transaction.AssociatedSite.SiteId" class="col-sm-10 form-control" />
+            <input id="modalTempAddress" readonly name="TempAddress" value="@Model.Transaction.AssociatedSite.Address" class="col-sm-10 form-control" />
+            <input id="modalTempDescription" readonly name="TempDescription" value="@Model.Transaction.AssociatedSite.Description" class="col-sm-10 form-control" />
+            <input id="modalTempLatitude" readonly name="TempLatitude" value="@Model.Transaction.AssociatedSite.Latitude" class="col-sm-10 form-control" />
+            <input id="modalTempLongitude" readonly name="TempLongitude" value="@Model.Transaction.AssociatedSite.Longitude" class="col-sm-10 form-control" />
+        </div>
+        <div id="siteSelectorMap" class="col-6"></div>
+    </div>
+</div> -->
+
+<div class="text-center container">
+    <form method="post">
+        <input readonly type="hidden" name="Transaction.TransactionId" value="@Model.Transaction.TransactionId" />
+
+        <!-- <input readonly type="hidden" name="Transaction.AssociatedSite.SiteId" value="@Model.Transaction.AssociatedSite.SiteId" />
+        <input readonly type="hidden" name="Transaction.AssociatedSite.Address" value="@Model.Transaction.AssociatedSite.Address" />
+        <input readonly type="hidden" name="Transaction.AssociatedSite.Description" value="@Model.Transaction.AssociatedSite.Description" />
+        <input readonly type="hidden" name="Transaction.AssociatedSite.Latitude" value="@Model.Transaction.AssociatedSite.Latitude" />
+        <input readonly type="hidden" name="Transaction.AssociatedSite.Longitude" value="@Model.Transaction.AssociatedSite.Longitude" /> -->
+
+        <div class="row d-flex">
+            <a class="btn btn-secondary mr-auto p-2" asp-area="" asp-page="/Transactions/Index">Back</a>
+            <button id="deleteItem" class="btn btn-danger p-2">
+                Delete
+            </button>
+            <input type="submit" class="btn btn-success p-2" value="Save and Submit" />
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4 text-right">
+                <label asp-for="@Model.Transaction.TransactionType">Transaction Type</label>
+            </div>
+            <div class="col-sm-6">
+                <select required
+                        asp-for="@Model.Transaction.TransactionType"
+                        asp-items="Html.GetEnumSelectList<TransactionTypeEnum>()"
+                        class="form-control">
+                    <option value="">Select a transaction type</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4 text-right">
+                <label asp-for="@Model.Transaction.Status">Status</label>
+            </div>
+            <div class="col-sm-6">
+                <input asp-for="@Model.Transaction.Status" class="form-control" />
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-sm-4 text-right">
+                <label asp-for="@Model.Transaction.AssociatedSite.Address">Site Address</label>
+            </div>
+            <div class="col-sm-6">
+                <input readonly asp-for="@Model.Transaction.AssociatedSite.Address" class="form-control" />
+            </div>
+            <div class="col-sm-2">
+                <button id="viewSiteDetails" type="button" class="btn btn-success">Site Details</button>
+            </div>
+        </div> -->
+
+        <div class="row">
+            <div class="col-sm-4 text-right">
+                <label asp-for="@Model.Transaction.AssociatedClient.Name">Client</label>
+            </div>
+            <div class="col-sm-6">
+                <select id="Transaction.AssociatedClient.ClientId"
+                        name="Transaction.AssociatedClient.ClientId"
+                        class="form-control">
+                    @foreach (var client in Model.SelectableClients)
+                    {
+                        @if (Model.Transaction.AssociatedClient.ClientId.ToString() == client.Value)
+                        {
+                            <option selected="selected" value="@client.Value">
+                                @client.Text
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@client.Value">
+                                @client.Text
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <input readonly type="hidden" name="Transaction.AssociatedSite.SiteId" value="@Model.Transaction.AssociatedSite.SiteId" />
+        <input readonly type="hidden" name="Transaction.AssociatedSite.Latitude" value="@Model.Transaction.AssociatedSite.Latitude" />
+        <input readonly type="hidden" name="Transaction.AssociatedSite.Longitude" value="@Model.Transaction.AssociatedSite.Longitude" />
+        <div class="row">
+            <div class="col-sm-4 text-right"></div>
+            <div class="col-sm-6">
+                <select id="siteSelectBox"
+                        name="siteSelectBox"
+                        class="form-control">
+                    <option value="">Add new site</option>
+                    @foreach (var site in Model.SelectableSites)
+                    {
+                        @if (Model.Transaction.AssociatedSite.SiteId.ToString() == site.Value)
+                        {
+                            <option selected="selected" value="@site.Value">
+                                @site.Text
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@site.Value">
+                                @site.Text
+                            </option>
+                        }
+                    }
+                </select>
+
+                <!-- <input id="modalTempSiteId" readonly type="hidden" name="TempSiteId" value="@Model.Transaction.AssociatedSite.SiteId" class="col-sm-10 form-control" />
+                <input id="modalTempAddress" readonly name="TempAddress" value="@Model.Transaction.AssociatedSite.Address" class="col-sm-10 form-control" />
+                <input id="modalTempDescription" readonly name="TempDescription" value="@Model.Transaction.AssociatedSite.Description" class="col-sm-10 form-control" />
+                <input id="modalTempLatitude" readonly name="TempLatitude" value="@Model.Transaction.AssociatedSite.Latitude" class="col-sm-10 form-control" />
+                <input id="modalTempLongitude" readonly name="TempLongitude" value="@Model.Transaction.AssociatedSite.Longitude" class="col-sm-10 form-control" /> -->
+            </div>
+            
+        </div>
+        
+        <div class="row">
+            <div class="col-sm-4 text-right">
+                <label asp-for="@Model.Transaction.AssociatedSite.Address">Site Address</label>
+            </div>
+            <div class="col-sm-6">
+                <input readonly class="form-control" name="Transaction.AssociatedSite.Address" value="@Model.Transaction.AssociatedSite.Address" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4 text-right">
+                <label asp-for="@Model.Transaction.AssociatedSite.Description">Site Description</label>
+            </div>
+            <div class="col-sm-6">
+                <input readonly class="form-control" name="Transaction.AssociatedSite.Description" value="@Model.Transaction.AssociatedSite.Description" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-6">
+                <div id="siteSelectorMap"></div>
+            </div>
+        </div>
+
+        <!-- TODO: Convert to DataTable? -->
+        <div class="row">
+            <table id="datagrid" class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var lineItem in Model.Transaction.LineItems)
+                    {
+                    <tr>
+                        <td class="hidden-index-column">
+                            <input readonly type="hidden" name="Transaction.LineItems.Index" value="@lineItem.LineItemId" />
+                            <input readonly type="hidden" name="Transaction.LineItems[@lineItem.LineItemId].LineItemId" value="@lineItem.LineItemId" />
+                            @lineItem.LineItemId
+                        </td>
+                        <td>
+                            <select id="Transaction.LineItems[@lineItem.LineItemId].ProductId"
+                                    name="Transaction.LineItems[@lineItem.LineItemId].ProductId"
+                                    class="col-sm-10 form-control">
+                                <option value="">--Pick a product--</option>
+                                @foreach (var product in Model.SelectableProducts)
+                                {
+                                    @if (lineItem.ProductId.ToString() == product.Value)
+                                    {
+                                        <option selected="selected" value="@product.Value">
+                                            @product.Text
+                                        </option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@product.Value">
+                                            @product.Text
+                                        </option>
+                                    }
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <input name="Transaction.LineItems[@lineItem.LineItemId].Quantity" value="@lineItem.Quantity" class="col-sm-10 form-control" />
+                        </td>
+                        <td>
+                            <input name="Transaction.LineItems[@lineItem.LineItemId].Price" value="@lineItem.Price" class="col-sm-10 form-control" />
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+            <button id="addRow" type="button" class="btn btn-success">Add row</button>
+        </div>
+    </form>
+</div>
+

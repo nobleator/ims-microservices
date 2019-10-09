@@ -1,0 +1,92 @@
+version: "3.7"
+
+services:
+  web:
+    container_name: web
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - 9000:80
+    depends_on:
+      - transaction
+      - delivery
+    networks:
+      - backend
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      # IMS_DBNAME: "imsdb"
+      # IMS_DBUSER: "han"
+      # IMS_DBPASS: "p@ssw0rd!"
+      # PRODUCT_API: ""
+
+  transaction:
+    container_name: transaction_service
+    build:
+      context: ./transaction-service
+      dockerfile: Dockerfile
+    # ports:
+    #   - 9001:80
+    depends_on:
+      - db
+      # - broker
+    networks:
+      - backend
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      IMS_DBNAME: "imsdb"
+      IMS_DBUSER: "han"
+      IMS_DBPASS: "p@ssw0rd!"
+
+  delivery:
+    container_name: delivery_service
+    build:
+      context: ./delivery-service
+      dockerfile: Dockerfile
+    # ports:
+    #   - 9002:80
+    depends_on:
+      - broker
+    networks:
+      - backend
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+
+  optimizer:
+    container_name: optimizer_service
+    build:
+      context: ./optimizer
+      dockerfile: Dockerfile
+    restart: on-failure
+    depends_on:
+      - broker
+    networks:
+      - backend
+    tty: true
+  
+  db:
+    container_name: db_service
+    image: postgres:10.7-alpine
+    ports:
+      - 5431:5432
+    networks:
+      - backend
+    volumes:
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_DB: "imsdb"
+  
+  broker:
+    container_name: broker_service
+    image: rabbitmq:3.7-management-alpine
+    ports:
+      # The standard AMQP protocol port
+      - 5672:5672
+      # HTTP management UI
+      - 15672:15672
+    networks:
+      - backend
+
+networks:
+  backend:

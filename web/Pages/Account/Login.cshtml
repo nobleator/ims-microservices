@@ -1,0 +1,36 @@
+@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+@section Scripts
+{
+  
+}
+
+<div class="text-center container">
+    <div class="row col-md-6 offset-3">
+        <form method="post">
+            <fieldset>
+                <legend>Login</legend>
+                <div class="form-group form-inline">
+                    <label asp-for="@Model.Username" class="col-sm-4 col-form-label">
+                        Username
+                    </label>
+                    <input required type="text" asp-for="@Model.Username" class="col-sm-8 form-control">
+                    
+                    <label asp-for="@Model.Password" class="col-sm-4 col-form-label">
+                        Password
+                    </label>
+                    <input required type="password" asp-for="@Model.Password" class="col-sm-8 form-control">
+
+                    <label asp-for="@Model.RememberMe" class="col-sm-4 col-form-label">
+                        Remember me
+                    </label>
+                    <input type="checkbox" asp-for="@Model.RememberMe">
+                </div>
+            </fieldset>
+            <input type="submit" class="btn btn-success" value="Login" />
+        </form>
+    </div>
+</div>

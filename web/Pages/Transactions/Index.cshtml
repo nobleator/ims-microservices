@@ -1,0 +1,44 @@
+@page
+@model TransactionsModel
+@{
+    ViewData["Title"] = "Transactions";
+}
+@section Scripts
+{
+  
+}
+
+<div class="text-center container">
+    <div class="row">
+        <a class="btn btn-primary" asp-page="./Transaction" asp-route-id="-1">Add New Transaction</a>
+    </div>
+    <div>
+        <table id="transactionTable" class="table table-striped table-hover">
+            <thead>
+                <th>Client</th>
+                <th>Status</th>
+                <th>Number of Line Items</th>
+                <th>Transaction Page</th>
+            </thead>
+            <tbody>
+                @foreach (var transaction in Model.AllTransactions)
+                {
+                    <tr>
+                        <td>
+                            @transaction.AssociatedClient.Name
+                        </td>
+                        <td>
+                            @transaction.Status
+                        </td>
+                        <td>
+                            @transaction.LineItems.Count
+                        </td>
+                        <td>
+                            <a asp-page="./Transaction" asp-route-id="@transaction.TransactionId">View/edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

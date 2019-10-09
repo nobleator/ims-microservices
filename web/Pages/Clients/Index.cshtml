@@ -1,0 +1,40 @@
+@page
+@model ClientsModel
+@{
+    ViewData["Title"] = "Clients";
+}
+@section Scripts
+{
+  
+}
+
+<div class="text-center container">
+    <div class="row">
+        <a class="btn btn-primary" asp-page="./Client" asp-route-id="-1">Add New Client</a>
+    </div>
+    <div>
+        <table id="clientTable" class="table table-striped table-hover">
+            <thead>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Client Page</th>
+            </thead>
+            <tbody>
+                @foreach (var client in Model.AllClients)
+                {
+                    <tr>
+                        <td>
+                            @client.Name
+                        </td>
+                        <td>
+                            @client.Description
+                        </td>
+                        <td>
+                            <a asp-page="./Client" asp-route-id="@client.ClientId">View/edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

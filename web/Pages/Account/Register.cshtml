@@ -1,0 +1,45 @@
+@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+@section Scripts
+{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+<div class="text-center container">
+    <div class="row col-md-6 offset-3">
+        <form method="post">
+            <fieldset>
+                <legend>Register</legend>
+                <div class="form-group form-inline">
+                    <label asp-for="@Model.ViewModel.Username" class="col-sm-4 col-form-label">
+                        Username
+                    </label>
+                    <input required type="text" asp-for="@Model.ViewModel.Username" class="col-sm-8 form-control">
+                    
+                    <label asp-for="@Model.ViewModel.Password" class="col-sm-4 col-form-label">
+                        Password
+                    </label>
+                    <input required type="password" asp-for="@Model.ViewModel.Password" class="col-sm-8 form-control">
+
+                    <label asp-for="@Model.ViewModel.ConfirmPassword" class="col-sm-4 col-form-label">
+                        Confirm Password
+                    </label>
+                    <input required type="password" asp-for="@Model.ViewModel.ConfirmPassword" class="col-sm-8 form-control">
+                    <span asp-validation-for="@Model.ViewModel.ConfirmPassword" class="col-sm-8 offset-4"></span>
+                    
+                    @foreach(var error in Model.ViewModel.Errors)
+                    {
+                        <span class="col-sm-8 offset-4">
+                            @error
+                        </span>
+                    }
+                </div>
+            </fieldset>
+            <input type="submit" class="btn btn-success" value="Register" />
+        </form>
+    </div>
+    
+</div>

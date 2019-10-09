@@ -1,0 +1,31 @@
+@model web.Domain.DataTransferObjects.LineItemViewModel
+
+<tr>
+    <td class="hidden-index-column">
+        <input readonly type="hidden" name="Transaction.LineItems.Index" value="@Model.LineItem.LineItemId" />
+        <input readonly type="hidden" name="Transaction.LineItems[@Model.LineItem.LineItemId].LineItemId" value="@Model.LineItem.LineItemId" />
+        @Model.LineItem.LineItemId
+    </td>
+    <td>
+        <select name="Transaction.LineItems[@Model.LineItem.LineItemId].ProductId" class="col-sm-10 form-control">
+            <option value="">--Pick a product--</option>
+            @foreach (var product in Model.SelectableProducts)
+            {
+                if (@Model.LineItem.ProductId.ToString() == product.Value)
+                {
+                    <option selected="selected" value="@product.Value">@product.Text</option>
+                }
+                else
+                {
+                    <option value="@product.Value">@product.Text</option>
+                }
+            }
+        </select>
+    </td>
+    <td>
+        <input name="Transaction.LineItems[@Model.LineItem.LineItemId].Quantity" value="@Model.LineItem.Quantity" class="col-sm-10 form-control" />
+    </td>
+    <td>
+        <input name="Transaction.LineItems[@Model.LineItem.LineItemId].Price" value="@Model.LineItem.Price" class="col-sm-10 form-control" />
+    </td>
+</tr>
