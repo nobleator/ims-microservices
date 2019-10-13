@@ -45,16 +45,13 @@
                             <a class="nav-link" asp-area="" asp-page="/Dashboard/Index">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Products/Index">Products</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Transactions/Index">Transactions</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Clients/Index">Clients</a>
+                            <a class="nav-link" asp-area="" asp-page="/Products/Index">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Sites/Index">Sites</a>
+                            <a class="nav-link" asp-area="" asp-page="/Clients/Index">Clients</a>
                         </li>
                     </ul>
                 </div>
@@ -130,7 +127,7 @@
                 asp-fallback-test="window.jQuery.fn.dataTable">
         </script>
     </environment>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

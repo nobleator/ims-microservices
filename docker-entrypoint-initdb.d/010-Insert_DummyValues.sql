@@ -42,21 +42,21 @@ VALUES (5, 'John Rammel', 'Prestige Postal Company');
 INSERT INTO client (client_id, name, description)
 VALUES (6, 'Gina Rogers', 'Apex Technology');
 
-INSERT INTO site (site_id, address, description, latitude, longitude)
-VALUES (1, '18 W Maple Street', 'Random address #1', 38.810954, -77.063048);
-INSERT INTO site (site_id, address, description, latitude, longitude)
-VALUES (2, '4116 Main Street', 'Random address #2', 38.733661, -77.103524);
-INSERT INTO site (site_id, address, description, latitude, longitude)
-VALUES (3, '1600 Pennsylvania Avenue', 'The White House', 38.897669, -77.036574);
-INSERT INTO site (site_id, address, description, latitude, longitude)
-VALUES (4, '2 15th St NW, Washington, DC 20024', 'Washington Monument', 38.889484, -77.035278);
+-- INSERT INTO site (site_id, address, description, latitude, longitude)
+-- VALUES (1, '18 W Maple Street', 'Random address #1', 38.810954, -77.063048);
+-- INSERT INTO site (site_id, address, description, latitude, longitude)
+-- VALUES (2, '4116 Main Street', 'Random address #2', 38.733661, -77.103524);
+-- INSERT INTO site (site_id, address, description, latitude, longitude)
+-- VALUES (3, '1600 Pennsylvania Avenue', 'The White House', 38.897669, -77.036574);
+-- INSERT INTO site (site_id, address, description, latitude, longitude)
+-- VALUES (4, '2 15th St NW, Washington, DC 20024', 'Washington Monument', 38.889484, -77.035278);
 
-INSERT INTO transaction (transaction_id, transaction_type, status, associated_client_id)
-VALUES (1, 'Purchase', 'Order placed', 1);
-INSERT INTO transaction (transaction_id, transaction_type, status, associated_client_id)
-VALUES (2, 'Purchase', 'Delivery scheduled', 2);
-INSERT INTO transaction (transaction_id, transaction_type, status, associated_client_id)
-VALUES (3, 'Purchase', 'Order completed', 3);
+INSERT INTO transaction (transaction_id, transaction_type, status, associated_client_id, priority)
+VALUES (1, 'Purchase', 'Order placed', 1, 3);
+INSERT INTO transaction (transaction_id, transaction_type, status, associated_client_id, priority)
+VALUES (2, 'Purchase', 'Delivery scheduled', 2, 2);
+INSERT INTO transaction (transaction_id, transaction_type, status, associated_client_id, priority)
+VALUES (3, 'Purchase', 'Order completed', 3, 1);
 
 INSERT INTO line_item (line_item_id, transaction_id, product_id, quantity, price)
 VALUES (1, 1, 1, 8, 4000);

@@ -97,6 +97,7 @@ namespace web.Utility
 
         public static async Task<List<Product>> GetProducts()
         {
+            Console.WriteLine($"DEBUG: Entering {nameof(GetProducts)}");
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             return await DeserializeFromStreamCallAsync<List<Product>>(token, "http://transaction/api/Products", HttpMethod.Get);
@@ -104,6 +105,7 @@ namespace web.Utility
 
         public static async Task<Product> GetProductById(int id)
         {
+            Console.WriteLine($"DEBUG: Entering {nameof(GetProductById)}");
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             return await DeserializeFromStreamCallAsync<Product>(token, $"http://transaction/api/Products/{id}", HttpMethod.Get);
@@ -111,6 +113,7 @@ namespace web.Utility
 
         public static async Task<bool> UpdateProduct(Product product)
         {
+            Console.WriteLine($"DEBUG: Entering {nameof(UpdateProduct)}");
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             return await PostData("http://transaction/api/Products", product);
@@ -118,6 +121,7 @@ namespace web.Utility
 
         public static async Task DeleteProduct(int id)
         {
+            Console.WriteLine($"DEBUG: Entering {nameof(DeleteProduct)}");
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             // TODO: Since the return from delete is void and void cannot be used in generics, must use object to absorb type?
@@ -126,6 +130,7 @@ namespace web.Utility
 
         public static async Task<List<Transaction>> GetTransactions()
         {
+            Console.WriteLine($"DEBUG: Entering {nameof(GetTransactions)}");
             CancellationTokenSource cts = new CancellationTokenSource();
             // Use cancellation token instead of setting timeout on HttpClient
             // This allows customization per call?
@@ -136,6 +141,7 @@ namespace web.Utility
 
         public static async Task<Transaction> GetTransactionById(int id)
         {
+            Console.WriteLine($"DEBUG: Entering {nameof(GetTransactionById)}");
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             return await DeserializeFromStreamCallAsync<Transaction>(token, $"http://transaction/api/Transactions/{id}", HttpMethod.Get);
@@ -143,6 +149,7 @@ namespace web.Utility
 
         public static async Task<bool> UpdateTransaction(Transaction transaction)
         {
+            Console.WriteLine($"DEBUG: Entering {nameof(UpdateTransaction)}");
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             return await PostData("http://transaction/api/Transactions", transaction);
@@ -150,6 +157,7 @@ namespace web.Utility
 
         public static async Task DeleteTransaction(int id)
         {
+            Console.WriteLine($"DEBUG: Entering {nameof(DeleteTransaction)}");
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             // TODO: Since the return from delete is void and void cannot be used in generics, must use object to absorb type?
@@ -158,6 +166,7 @@ namespace web.Utility
 
         public static async Task<List<Client>> GetClients()
         {
+            Console.WriteLine($"DEBUG: Entering {nameof(GetClients)}");
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             return await DeserializeFromStreamCallAsync<List<Client>>(token, "http://transaction/api/Clients", HttpMethod.Get);
@@ -165,6 +174,7 @@ namespace web.Utility
 
         public static async Task<Client> GetClientById(int id)
         {
+            Console.WriteLine($"DEBUG: Entering {nameof(GetClientById)}");
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             return await DeserializeFromStreamCallAsync<Client>(token, $"http://transaction/api/Clients/{id}", HttpMethod.Get);
@@ -172,6 +182,7 @@ namespace web.Utility
 
         public static async Task<bool> UpdateClient(Client client)
         {
+            Console.WriteLine($"DEBUG: Entering {nameof(UpdateClient)}");
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             return await PostData("http://transaction/api/Clients", client);
@@ -179,43 +190,16 @@ namespace web.Utility
 
         public static async Task DeleteClient(int id)
         {
+            Console.WriteLine($"DEBUG: Entering {nameof(DeleteClient)}");
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             // TODO: Since the return from delete is void and void cannot be used in generics, must use object to absorb type?
             await DeserializeFromStreamCallAsync<object>(token, $"http://transaction/api/Clients/{id}", HttpMethod.Delete);
         }
 
-        public static async Task<List<Site>> GetSites()
-        {
-            CancellationTokenSource cts = new CancellationTokenSource();
-            CancellationToken token = cts.Token;
-            return await DeserializeFromStreamCallAsync<List<Site>>(token, "http://transaction/api/Sites", HttpMethod.Get);
-        }
-
-        public static async Task<Site> GetSiteById(int id)
-        {
-            CancellationTokenSource cts = new CancellationTokenSource();
-            CancellationToken token = cts.Token;
-            return await DeserializeFromStreamCallAsync<Site>(token, $"http://transaction/api/Sites/{id}", HttpMethod.Get);
-        }
-
-        public static async Task<bool> UpdateSite(Site site)
-        {
-            CancellationTokenSource cts = new CancellationTokenSource();
-            CancellationToken token = cts.Token;
-            return await PostData("http://transaction/api/Sites", site);
-        }
-
-        public static async Task DeleteSite(Guid id)
-        {
-            CancellationTokenSource cts = new CancellationTokenSource();
-            CancellationToken token = cts.Token;
-            // TODO: Since the return from delete is void and void cannot be used in generics, must use object to absorb type?
-            await DeserializeFromStreamCallAsync<object>(token, $"http://transaction/api/Sites/{id}", HttpMethod.Delete);
-        }
-
         public static async Task<bool> QueueDeliveryOptimization()
         {
+            Console.WriteLine($"DEBUG: Entering {nameof(QueueDeliveryOptimization)}");
             CancellationTokenSource cts = new CancellationTokenSource();
             CancellationToken token = cts.Token;
             return await PostData("http://delivery/api/Deliveries");

@@ -20,7 +20,7 @@ namespace web.Pages
         [BindProperty]
         public Transaction Transaction { get; set; }
         public List<SelectListItem> SelectableProducts = new List<SelectListItem>();
-        public List<SelectListItem> SelectableSites = new List<SelectListItem>();
+        // public List<SelectListItem> SelectableSites = new List<SelectListItem>();
         public List<SelectListItem> SelectableClients = new List<SelectListItem>();
         public TransactionModel()
         {
@@ -30,14 +30,6 @@ namespace web.Pages
         public void OnGetAsync(int id)
         {
             Transaction = ApiHelper.GetTransactionById(id).Result;
-
-            // TODO: Create default entities in service
-            if (Transaction.AssociatedSite == null)
-            {
-                Console.WriteLine("DEBUG: Warning: AssociatedSite is null");
-                // Transaction.AssociatedSite = _siteService.GetDefaultSite();
-                Transaction.AssociatedSite = new Site();
-            }
 
             if (Transaction.AssociatedClient == null)
             {
@@ -51,14 +43,6 @@ namespace web.Pages
                 {
                     Value = p.ProductId.ToString(),
                     Text = p.Name
-                })
-                .ToList();
-
-            SelectableSites = ApiHelper.GetSites().Result
-                .Select(s => new SelectListItem
-                {
-                    Value = s.SiteId.ToString(),
-                    Text = s.Address
                 })
                 .ToList();
 
@@ -107,16 +91,21 @@ namespace web.Pages
             };
         }
 
+        public JsonResult OnGetSearchableSiteNames()
+        {
+            var names = new List<string>
+            {
+                "White House",
+                "Masonic Temple",
+                "Mount Vernon"
+            };
+            return new JsonResult(names);
+        }
+
         public ContentResult OnGetApiKey()
         {
             // return Content(_transactionService.GetApiKey());
             return Content("dummy_api_key_goes_here");
-        }
-
-        public JsonResult OnGetSiteObjects()
-        {
-            // return new JsonResult(_siteService.GetSites());
-            return new JsonResult(ApiHelper.GetSites().Result);
         }
 
         public async Task<IActionResult> OnPostAsync()

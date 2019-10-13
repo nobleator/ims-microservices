@@ -13,18 +13,26 @@ namespace transaction_service.Domain.Entities
     {
         [Column("transaction_id")]
         public int TransactionId { get; set; }
-        [Column("associated_site_id")]
-        public int? SiteId { get; set; }
         [Column("associated_client_id")]
         public int? ClientId { get; set; }
         [Column("transaction_type")]
         public string TransactionType { get; set; }
         [Column("status")]
         public string Status { get; set; }
-        [Column("deliver_before")]
-        public DateTime DeliverBefore { get; set; }
         [Column("deliver_after")]
-        public DateTime DeliverAfter { get; set; }
+        public DateTime? DeliverAfter { get; set; }
+        [Column("deliver_before")]
+        public DateTime? DeliverBefore { get; set; }
+        [Column("priority")]
+        public int Priority { get; set; }
+
+        [Column("site_name")]
+        public string SiteName { get; set; }
+        [Column("site_latitude")]
+        public double SiteLatitude { get; set; }
+        [Column("site_longitude")]
+        public double SiteLongitude { get; set; }
+
         [Column("updated_on")]
         public DateTime UpdatedOn { get; set; }
         [Column("updated_by")]
@@ -37,8 +45,6 @@ namespace transaction_service.Domain.Entities
         public bool Deleted { get; set; }
 
         public List<LineItem> LineItems { get; set; }
-        [ForeignKey("SiteId")]
-        public Site AssociatedSite { get; set; }
         [ForeignKey("ClientId")]
         public Client AssociatedClient { get; set; }
 
@@ -53,7 +59,6 @@ namespace transaction_service.Domain.Entities
                 DeliverBefore = DeliverBefore,
                 DeliverAfter = DeliverAfter,
                 LineItems = LineItems.Select(li => li.toDto()).ToList(),
-                AssociatedSite = AssociatedSite?.toDto(),
                 AssociatedClient = AssociatedClient?.toDto()
             };
         }

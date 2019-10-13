@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using transaction_service.Domain;
 using transaction_service.Domain.Entities;
 using DTO = transaction_service.Domain.DataTransferObjects;
@@ -24,7 +25,6 @@ namespace transaction_service.Controllers
             {
                 transactionList = db.Transactions
                     .Include(t => t.LineItems)
-                    .Include(t => t.AssociatedSite)
                     .Include(t => t.AssociatedClient)
                     .Where(t => !t.Deleted)
                     .Select(t => t.toDto())
@@ -44,7 +44,6 @@ namespace transaction_service.Controllers
             {
                 transaction = db.Transactions
                     .Include(t => t.LineItems)
-                    .Include(t => t.AssociatedSite)
                     .Include(t => t.AssociatedClient)
                     .Where(t => !t.Deleted &&
                                 t.TransactionId == id)
@@ -71,7 +70,7 @@ namespace transaction_service.Controllers
         public void Post([FromBody] DTO.Transaction transaction)
         {
             Console.WriteLine($"DEBUG: Entering {nameof(Post)}");
-            Console.WriteLine($"DEBUG: Request body contained: {transaction}");
+            Console.WriteLine($"DEBUG: Request body contained: {JsonConvert.SerializeObject(transaction, Formatting.Indented)}");
             // TODO: updatedBy
             var updatedBy = "SYSTEM";
             using (var db = new TransactionServiceDbContext())
@@ -80,7 +79,7 @@ namespace transaction_service.Controllers
                 var dbTransaction = db.Transactions.FindAsync(transaction.TransactionId).Result;
                 if (dbTransaction == null && transaction.TransactionId == -1)
                 {
-                    Console.WriteLine($"DEBUG: Creating new transaction");                    
+                    Console.WriteLine($"DEBUG: Creating new transaction");
                     // PK is serial, so should be automatically generated
                     dbTransaction = new Domain.Entities.Transaction
                     {
@@ -96,6 +95,13 @@ namespace transaction_service.Controllers
                     dbTransaction.TransactionType = transaction.TransactionType.ToString();
                     dbTransaction.UpdatedOn = DateTime.UtcNow;
                     dbTransaction.UpdatedBy = updatedBy;
+                    dbTransaction.DeliverAfter = transaction.DeliverAfter;
+                    dbTransaction.DeliverBefore = transaction.DeliverBefore;
+                    dbTransaction.Priority = (int)transaction.Priority;
+                    dbTransaction.SiteName = transaction.SiteName;
+                    dbTransaction.SiteLatitude = transaction.SiteLatitude;
+                    dbTransaction.SiteLongitude = transaction.SiteLongitude;
+
                     // Unsure why LineItems is null instead of empty list
                     if (transaction.LineItems != null)
                     {
@@ -123,26 +129,6 @@ namespace transaction_service.Controllers
                         }
                     }
                     
-                    if (transaction.AssociatedSite != null)
-                    {
-                        Console.WriteLine($"DEBUG: Updating site");
-                        // Site should not be editable from the transasction page, only selectable or newly created
-                        var dbSite = db.Sites.FindAsync(transaction.AssociatedSite.SiteId).Result;
-                        if (dbSite == null)
-                        {                                                           
-                            dbSite = new Domain.Entities.Site
-                            {
-                                Address = transaction.AssociatedSite.Address,
-                                Description = transaction.AssociatedSite.Description,
-                                Latitude = transaction.AssociatedSite.Latitude,
-                                Longitude = transaction.AssociatedSite.Longitude,
-                                CreatedOn = DateTime.UtcNow,
-                                CreatedBy = updatedBy
-                            };
-                            db.Add(dbSite);
-                        }
-                        dbTransaction.AssociatedSite = dbSite;
-                    }
                     Console.WriteLine($"DEBUG: Updating client ID");
                     dbTransaction.ClientId = transaction.AssociatedClient?.ClientId;
                     Console.WriteLine($"DEBUG: Saving changes");

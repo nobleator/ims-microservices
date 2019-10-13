@@ -12,7 +12,6 @@ namespace transaction_service.Domain
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Client> Clients { get; set; }
-        public DbSet<Site> Sites { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<LineItem> LineItems { get; set; }
 

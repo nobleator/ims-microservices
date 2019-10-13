@@ -35,7 +35,8 @@ namespace delivery_service.Controllers
             Console.WriteLine($"DEBUG: Entering {nameof(Post)}");
             Console.WriteLine($"DEBUG: No body expected, queueing new delivery schedule");
 
-            // Get all line items that are flagged "Ready to ship" 
+            // Get all line items that are flagged "Ready to ship" and have valid DeliverAfter and DeliverBefore values
+            // Scale profits by Priority values
             // Ensure destination and profitability are available or calculatible
             var candidates = new List<LineItem>
             {
