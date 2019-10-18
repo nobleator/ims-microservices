@@ -58,6 +58,9 @@ namespace transaction_service.Domain.Entities
                 Status = Status,
                 DeliverBefore = DeliverBefore,
                 DeliverAfter = DeliverAfter,
+                SiteName = SiteName,
+                SiteLatitude = SiteLatitude,
+                SiteLongitude = SiteLongitude,
                 LineItems = LineItems.Select(li => li.toDto()).ToList(),
                 AssociatedClient = AssociatedClient?.toDto()
             };

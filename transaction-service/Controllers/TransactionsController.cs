@@ -159,5 +159,33 @@ namespace transaction_service.Controllers
                 db.SaveChangesAsync();
             }
         }
+
+        // GET api/transactions/sitesearch/test
+        [Route("SiteSearch/{query}")]
+        [HttpGet]
+        public ActionResult<List<DTO.SiteSearchResult>> SiteSearch(string query)
+        {
+            Console.WriteLine($"DEBUG: Entering {nameof(SiteSearch)}");
+            Console.WriteLine($"DEBUG: query: {query}");
+            List<DTO.SiteSearchResult> sites;
+
+            using (var db = new TransactionServiceDbContext())
+            {
+                // TODO: Fuzzy/forgiving search for query
+                sites = db.Transactions
+                    .Where(t => !t.Deleted &&
+                                t.SiteName == query)
+                    .Select(t => new DTO.SiteSearchResult
+                    {
+                        SiteName = t.SiteName,
+                        SiteLatitude = t.SiteLatitude,
+                        SiteLongitude = t.SiteLongitude,
+                    })
+                    .ToList();
+            }
+            Console.WriteLine($"DEBUG: Matching sites found: {JsonConvert.SerializeObject(sites, Formatting.Indented)}");
+
+            return Ok(sites);
+        }
     }
 }

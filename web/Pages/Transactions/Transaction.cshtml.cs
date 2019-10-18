@@ -12,6 +12,7 @@ using web.Domain.DataTransferObjects;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using web.Enums;
 using web.Utility;
+using Newtonsoft.Json;
 
 namespace web.Pages
 {
@@ -20,7 +21,6 @@ namespace web.Pages
         [BindProperty]
         public Transaction Transaction { get; set; }
         public List<SelectListItem> SelectableProducts = new List<SelectListItem>();
-        // public List<SelectListItem> SelectableSites = new List<SelectListItem>();
         public List<SelectListItem> SelectableClients = new List<SelectListItem>();
         public TransactionModel()
         {
@@ -91,15 +91,13 @@ namespace web.Pages
             };
         }
 
-        public JsonResult OnGetSearchableSiteNames()
+        public JsonResult OnGetSearchableSiteNames(string query)
         {
-            var names = new List<string>
-            {
-                "White House",
-                "Masonic Temple",
-                "Mount Vernon"
-            };
-            return new JsonResult(names);
+            // TODO: Make async
+            Console.WriteLine($"DEBUG: Incoming query: {query}");
+            var searchResults = ApiHelper.GetSiteSearchResults(query).Result;
+            Console.WriteLine($"DEBUG: Site search results: {JsonConvert.SerializeObject(searchResults, Formatting.Indented)}");
+            return new JsonResult(searchResults);
         }
 
         public ContentResult OnGetApiKey()

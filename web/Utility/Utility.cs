@@ -197,6 +197,15 @@ namespace web.Utility
             await DeserializeFromStreamCallAsync<object>(token, $"http://transaction/api/Clients/{id}", HttpMethod.Delete);
         }
 
+        public static async Task<List<SiteSearchResult>> GetSiteSearchResults(string query)
+        {
+            Console.WriteLine($"DEBUG: Entering {nameof(GetSiteSearchResults)}");
+            Console.WriteLine($"DEBUG: query: {query}");
+            CancellationTokenSource cts = new CancellationTokenSource();
+            CancellationToken token = cts.Token;
+            return await DeserializeFromStreamCallAsync<List<SiteSearchResult>>(token, $"http://transaction/api/Transactions/SiteSearch/{query}", HttpMethod.Get);
+        }
+
         public static async Task<bool> QueueDeliveryOptimization()
         {
             Console.WriteLine($"DEBUG: Entering {nameof(QueueDeliveryOptimization)}");

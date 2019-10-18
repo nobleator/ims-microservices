@@ -112,7 +112,10 @@ $("#addRow").click(function() {
 });
 
 $("#searchSiteNames").click(function() {
-    get(window.location.href + "?handler=SearchableSiteNames").then(function(response) {
+    // TODO: Get value from input field and pass as search query
+    var query = "test";
+    get(window.location.href + "?handler=SearchableSiteNames&query=" + query).then(function(response) {
+        // TODO: Use search results to populate lat/long fields (popup window to select from?)
         console.log(response.toString());
     },
     function(error) {
