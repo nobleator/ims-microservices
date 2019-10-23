@@ -111,14 +111,32 @@ $("#addRow").click(function() {
     });
 });
 
-$("#searchSiteNames").click(function() {
-    // TODO: Get value from input field and pass as search query
-    var query = "test";
-    get(window.location.href + "?handler=SearchableSiteNames&query=" + query).then(function(response) {
-        // TODO: Use search results to populate lat/long fields (popup window to select from?)
-        console.log(response.toString());
-    },
-    function(error) {
-        console.error("AJAX request failed!", error);
-    });
-});
+// $('#searchSiteInput').on("keyup", function() {
+//     let selectedOption = $('option[value="'+$(this).val()+'"]');
+//     if (selectedOption) {
+//         sitePin.dragging.disable();
+//         let newPinLocation = new L.LatLng(selectedOption.dataset.latitude, selectedOption.dataset.longitude);
+//         sitePin.setLatLng(newPinLocation);
+//         siteSelectorMap.panTo(newPinLocation);
+//     }
+// });
+
+// $("#searchSiteNames").click(function() {
+//     var query = document.getElementById("siteSearchInput").value;
+//     get(window.location.href + "?handler=SearchableSiteNames&query=" + query).then(function(response) {
+//         // TODO: Use search results to populate lat/long fields
+//         console.log(response.toString());
+//         let data = JSON.parse(response);
+//         let datalist = document.getElementById("siteSearchList");
+//         data.forEach(function(searchResult) {
+//             let option = document.createElement("option");
+//             option.value = searchResult.siteName;
+//             option.dataset.latitude = searchResult.siteLatitude
+//             option.dataset.longitude = searchResult.siteLongitude
+//             datalist.appendChild(option);
+//         });
+//     },
+//     function(error) {
+//         console.error("AJAX request failed!", error);
+//     });
+// });
