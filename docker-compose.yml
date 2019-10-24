@@ -74,6 +74,7 @@ services:
       - backend
     volumes:
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      # - ./docker-volumes/psql-data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: "imsdb"
   
