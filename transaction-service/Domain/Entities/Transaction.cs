@@ -58,6 +58,7 @@ namespace transaction_service.Domain.Entities
                 Status = Status,
                 DeliverBefore = DeliverBefore,
                 DeliverAfter = DeliverAfter,
+                Priority = (PriorityEnum)Priority,
                 SiteName = SiteName,
                 SiteLatitude = SiteLatitude,
                 SiteLongitude = SiteLongitude,

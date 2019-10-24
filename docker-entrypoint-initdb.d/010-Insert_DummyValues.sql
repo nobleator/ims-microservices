@@ -51,11 +51,11 @@ VALUES (6, 'Gina Rogers', 'Apex Technology');
 -- INSERT INTO site (site_id, address, description, latitude, longitude)
 -- VALUES (4, '2 15th St NW, Washington, DC 20024', 'Washington Monument', 38.889484, -77.035278);
 
-INSERT INTO transaction (transaction_id, transaction_type, status, associated_client_id, priority, site_name, site_latitude, site_longititude)
+INSERT INTO transaction (transaction_id, transaction_type, status, associated_client_id, priority, site_name, site_latitude, site_longitude)
 VALUES (1, 'Purchase', 'Order placed', 1, 3, 'Random address #1', 38.810954, -77.063048);
-INSERT INTO transaction (transaction_id, transaction_type, status, associated_client_id, priority, site_name, site_latitude, site_longititude)
+INSERT INTO transaction (transaction_id, transaction_type, status, associated_client_id, priority, site_name, site_latitude, site_longitude)
 VALUES (2, 'Purchase', 'Delivery scheduled', 2, 2, 'Random address #2', 38.733661, -77.103524);
-INSERT INTO transaction (transaction_id, transaction_type, status, associated_client_id, priority, site_name, site_latitude, site_longititude)
+INSERT INTO transaction (transaction_id, transaction_type, status, associated_client_id, priority, site_name, site_latitude, site_longitude)
 VALUES (3, 'Purchase', 'Order completed', 3, 1, 'The White House', 38.897669, -77.036574);
 
 INSERT INTO line_item (line_item_id, transaction_id, product_id, quantity, price)
