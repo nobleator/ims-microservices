@@ -20,7 +20,7 @@ namespace transaction_service
         public Startup(IConfiguration configuration)
         {
             // AppSecrets.json is used for microservice-specific debugging, env vars for Heroku and Docker use
-            var Configuration = new ConfigurationBuilder()
+            Configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("AppSecrets.json", optional: true)
                 .AddEnvironmentVariables()
