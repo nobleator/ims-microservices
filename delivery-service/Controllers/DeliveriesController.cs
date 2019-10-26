@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using RabbitMQ.Client;
 using delivery_service.Domain.DataTransferObjects;
 using Newtonsoft.Json;
+using Npgsql;
+using Dapper;
 
 namespace delivery_service.Controllers
 {
@@ -38,6 +40,13 @@ namespace delivery_service.Controllers
             // Get all line items that are flagged "Ready to ship" and have valid DeliverAfter and DeliverBefore values
             // Scale profits by Priority values
             // Ensure destination and profitability are available or calculatible
+            var query = "select line_item_id, transaction_id, product_id, quantity, price from line_item;";
+            using (var dbConnection = new NpgsqlConnection(Startup.DbConnectionString))
+            {
+                dbConnection.Open();
+                var test = dbConnection.Query<LineItem>(query);
+                Console.WriteLine($"First line item in Dapper test query: {test.First()}");
+            }
             var candidates = new List<LineItem>
             {
                 new LineItem

@@ -52,6 +52,9 @@ services:
       - backend
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      IMS_DBNAME: "imsdb"
+      IMS_DBUSER: "han"
+      IMS_DBPASS: "p@ssw0rd!"
 
   optimizer:
     container_name: optimizer_service
@@ -74,7 +77,6 @@ services:
       - backend
     volumes:
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-      # - ./docker-volumes/psql-data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: "imsdb"
   
