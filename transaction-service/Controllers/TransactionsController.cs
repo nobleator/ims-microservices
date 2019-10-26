@@ -95,8 +95,8 @@ namespace transaction_service.Controllers
                     dbTransaction.TransactionType = transaction.TransactionType.ToString();
                     dbTransaction.UpdatedOn = DateTime.UtcNow;
                     dbTransaction.UpdatedBy = updatedBy;
-                    dbTransaction.DeliverAfter = transaction.DeliverAfter;
-                    dbTransaction.DeliverBefore = transaction.DeliverBefore;
+                    dbTransaction.DeliverAfter = transaction.DeliverAfter?.ToUniversalTime();
+                    dbTransaction.DeliverBefore = transaction.DeliverBefore?.ToUniversalTime();
                     dbTransaction.Priority = (int)transaction.Priority;
                     dbTransaction.SiteName = transaction.SiteName;
                     dbTransaction.SiteLatitude = transaction.SiteLatitude;
