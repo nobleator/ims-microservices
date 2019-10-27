@@ -30,8 +30,7 @@ for ([int]$i = $start; $i -le $end; $i++) {
     [array]$sqlScripts = @(Get-ChildItem -Path $folder -Filter *.sql)
     foreach ($script in $sqlScripts) {
         $file = $script.Name
-        Write-Output ("Script file to execute: {0}" -f $file)
-        Write-Output ("Executing {0} against the Dockerized DB" -f $file)
+        Write-Output ("Executing {0}" -f $file)
         # docker exec -it <container name> psql -U <valid username> -a <database name> -f <SQL file>
         & docker exec -it db_service psql -U postgres -a imsdb -f "/tmp/sql/$folder/$file" | Out-Null
     }
