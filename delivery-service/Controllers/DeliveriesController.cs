@@ -37,28 +37,18 @@ namespace delivery_service.Controllers
             Console.WriteLine($"DEBUG: Entering {nameof(Post)}");
             Console.WriteLine($"DEBUG: No body expected, queueing new delivery schedule");
 
-            // Get all line items that are flagged "Ready to ship" and have valid DeliverAfter and DeliverBefore values
-            // Scale profits by Priority values
-            // Ensure destination and profitability are available or calculatible
-            var query = "select line_item_id, transaction_id, product_id, quantity, price from line_item;";
+            // Include aliases for mapping return values to DTO class
+            List<CandidateDelivery> candidates;
+            var sql = "SELECT line_item_id AS LineItemId, delivery_priority AS Priority, profit AS Profit, site_latitude as SiteLatitude, site_longitude AS SiteLongitude FROM get_candidate_deliveries(@as_of);";
             using (var dbConnection = new NpgsqlConnection(Startup.DbConnectionString))
             {
                 dbConnection.Open();
-                var test = dbConnection.Query<LineItem>(query);
-                Console.WriteLine($"First line item in Dapper test query: {test.First()}");
+                var p = new DynamicParameters();
+                p.Add("@as_of", DateTime.UtcNow);
+                candidates = dbConnection.Query<CandidateDelivery>(sql, p).ToList();
             }
-            var candidates = new List<LineItem>
-            {
-                new LineItem
-                {
-                    LineItemId = -1,
-                    TransactionId = -1,
-                    ProductId = -1,
-                    Quantity = 10,
-                    Price = 100
-                }
-            };
             var candidatesStr = JsonConvert.SerializeObject(candidates);
+            Console.WriteLine($"DEBUG: Sending to broker: {candidatesStr}");
             var outgoingBody = Encoding.UTF8.GetBytes(candidatesStr);
 
             // TODO: broker is the connected RabbitMQ Docker container. Update to pull from config/env settings
