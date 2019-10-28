@@ -1,4 +1,10 @@
-CREATE OR REPLACE FUNCTION get_candidate_deliveries(as_of TIMESTAMP) RETURNS TABLE(line_item_id INT, delivery_priority INT, profit NUMERIC, site_latitude FLOAT, site_longitude FLOAT) AS $$
+CREATE OR REPLACE FUNCTION get_candidate_deliveries(as_of TIMESTAMP)
+RETURNS TABLE(line_item_id INT,
+              delivery_priority INT,
+              profit NUMERIC,
+              site_latitude FLOAT,
+              site_longitude FLOAT)
+AS $$
     WITH purchases_cte (product_id, avg_purchase_price) AS (
         SELECT li.product_id, AVG(li.price / li.quantity) AS avg_purchase_price
         FROM public.line_item li
