@@ -13,11 +13,11 @@ AS $$
         GROUP BY li.product_id
     )
 
-    SELECT li.line_item_id,
-        t.priority,
+    SELECT li.line_item_id AS line_item_id,
+        t.priority AS delivery_priority,
         (li.price / li.quantity) - pcte.avg_purchase_price AS profit,
-        t.site_latitude,
-        t.site_longitude
+        t.site_latitude AS site_latitude,
+        t.site_longitude AS site_longitude
     FROM public.line_item li
     JOIN public.transaction t ON t.transaction_id = li.transaction_id
     JOIN purchases_cte pcte ON pcte.product_id = li.product_id
