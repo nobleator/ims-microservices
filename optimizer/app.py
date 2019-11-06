@@ -6,6 +6,7 @@ See: https://dev.to/usamaashraf/microservices--rabbitmq-on-docker-e2f
 import pika
 import time
 import json
+import cvrp
 
 
 def callback(ch, method, properties, body):
@@ -16,6 +17,19 @@ def callback(ch, method, properties, body):
     data = json.loads(str_obj)
     print("JSON data object:")
     print(json.dumps(data, sort_keys=True, indent=4))
+    # TODO: Get depot and truck data
+    print("Constructing model...")
+    depot = (0, 0)
+    trucks = [cvrp.Truck(truck_id="t1", capacity=10, per_mile_cost=0, max_dist=100)]
+    # TODO: Add size to message payload
+    deliveries = [cvrp.Delivery(delivery_id=f"d{i}", location=(line_item["SiteLatitude"], line_item["SiteLongitude"]), profit=line_item["Profit"], size=1)
+                  for i, line_item in enumerate(data)]
+    print(f"Deliveries: {deliveries}")
+    opt = cvrp.CVRP(depot_location=depot, trucks=trucks, deliveries=deliveries)
+    opt.init_all()
+    print("Solving...")
+    opt.solve()
+    print(f"Done solving. Result: {opt.mip_result}")
 
 
 def listen():
