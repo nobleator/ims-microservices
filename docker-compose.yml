@@ -67,6 +67,18 @@ services:
     networks:
       - backend
     tty: true
+
+  aggregator:
+    container_name: aggregator_service
+    build:
+      context: ./aggregator
+      dockerfile: Dockerfile
+    restart: on-failure
+    depends_on:
+      - broker
+    networks:
+      - backend
+    tty: true
   
   db:
     container_name: db_service
