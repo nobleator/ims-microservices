@@ -10,6 +10,7 @@ namespace delivery_service.Domain.DataTransferObjects
         public int LineItemId { get; set; }
         public int Priority { get; set; }
         public decimal Profit { get; set; }
+        public decimal Weight { get; set; }
         public decimal SiteLatitude { get; set; }
         public decimal SiteLongitude { get; set; }
     }

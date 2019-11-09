@@ -39,7 +39,7 @@ namespace delivery_service.Controllers
 
             // Include aliases for mapping return values to DTO class
             List<CandidateDelivery> candidates;
-            var sql = "SELECT line_item_id AS LineItemId, delivery_priority AS Priority, profit AS Profit, site_latitude as SiteLatitude, site_longitude AS SiteLongitude FROM get_candidate_deliveries(@as_of);";
+            var sql = "SELECT line_item_id AS LineItemId, delivery_priority AS Priority, profit AS Profit, weight AS Weight, site_latitude as SiteLatitude, site_longitude AS SiteLongitude FROM get_candidate_deliveries(@as_of);";
             using (var dbConnection = new NpgsqlConnection(Startup.DbConnectionString))
             {
                 dbConnection.Open();

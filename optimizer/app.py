@@ -22,7 +22,7 @@ def callback(ch, method, properties, body):
     depot = (0, 0)
     trucks = [cvrp.Truck(truck_id="t1", capacity=10, per_mile_cost=0, max_dist=100)]
     # TODO: Add size to message payload
-    deliveries = [cvrp.Delivery(delivery_id=f"d{i}", location=(line_item["SiteLatitude"], line_item["SiteLongitude"]), profit=line_item["Profit"], size=1)
+    deliveries = [cvrp.Delivery(delivery_id=f"d{i}", location=(line_item["SiteLatitude"], line_item["SiteLongitude"]), profit=line_item["Profit"], size=line_item["Weight"])
                   for i, line_item in enumerate(data)]
     print(f"Deliveries: {deliveries}")
     opt = cvrp.CVRP(depot_location=depot, trucks=trucks, deliveries=deliveries)

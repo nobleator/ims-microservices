@@ -1,94 +1,109 @@
-INSERT INTO product (product_id, name, description)
+INSERT INTO product (product_id, name, description, weight)
 VALUES (1,
         'Widget #1',
-        'The quick brown fox jumps over the lazy dog');
+        'The quick brown fox jumps over the lazy dog',
+        1.5);
 
 
-INSERT INTO product (product_id, name, description)
+INSERT INTO product (product_id, name, description, weight)
 VALUES (2,
         'Widget #2',
-        'The quick brown fox jumps over the lazy dog');
+        'The quick brown fox jumps over the lazy dog',
+        6.6667);
 
 
-INSERT INTO product (product_id, name, description, created_by)
+INSERT INTO product (product_id, name, description, created_by, weight)
 VALUES (3,
         '1st thingamabob',
         'The quick brown fox jumps over the lazy dog',
-        'Dave');
+        'Dave',
+        3.5);
 
 
-INSERT INTO product (product_id, name, description, created_by)
+INSERT INTO product (product_id, name, description, created_by, weight)
 VALUES (4,
         '2nd thingamabob',
         'The quick brown fox jumps over the lazy dog',
-        'Dave');
+        'Dave',
+        3);
 
 
-INSERT INTO product (product_id, name, description, created_by)
+INSERT INTO product (product_id, name, description, created_by, weight)
 VALUES (5,
         '3rd thingamabob',
         'The quick brown fox jumps over the lazy dog',
-        'Dave');
+        'Dave',
+        7.25);
 
 
-INSERT INTO product (product_id, name, created_by)
+INSERT INTO product (product_id, name, created_by, weight)
 VALUES (6,
         '100 lb basis weight thick and shiny paper',
-        'Chandler');
+        'Chandler',
+        100);
 
 
-INSERT INTO product (product_id, name, created_by)
+INSERT INTO product (product_id, name, created_by, weight)
 VALUES (7,
         '20 lb basis weight thin and shiny paper',
-        'Chandler');
+        'Chandler',
+        20);
 
 
-INSERT INTO product (product_id, name, created_by)
+INSERT INTO product (product_id, name, created_by, weight)
 VALUES (8,
         '50 lb basis weight smooth lightweight paper',
-        'Chandler');
+        'Chandler',
+        50);
 
 
-INSERT INTO product (product_id, name, created_by)
+INSERT INTO product (product_id, name, created_by, weight)
 VALUES (9,
         '60 lb basis weight smooth lightweight paper',
-        'Betty');
+        'Betty',
+        60);
 
 
-INSERT INTO product (product_id, name, created_by)
+INSERT INTO product (product_id, name, created_by, weight)
 VALUES (10,
         '70 lb basis weight smooth lightweight paper',
-        'Betty');
+        'Betty',
+        70);
 
 
-INSERT INTO product (product_id, name, created_by)
+INSERT INTO product (product_id, name, created_by, weight)
 VALUES (11,
         '80 lb basis weight smooth lightweight paper',
-        'Betty');
+        'Betty',
+        80);
 
 
-INSERT INTO product (product_id, name, created_by)
+INSERT INTO product (product_id, name, created_by, weight)
 VALUES (12,
         '50 lb basis weight rough vellum finish lightweight paper',
-        'Betty');
+        'Betty',
+        50);
 
 
-INSERT INTO product (product_id, name, created_by)
+INSERT INTO product (product_id, name, created_by, weight)
 VALUES (13,
         '60 lb basis weight rough vellum finish lightweight paper',
-        'Betty');
+        'Betty',
+        60);
 
 
-INSERT INTO product (product_id, name, created_by)
+INSERT INTO product (product_id, name, created_by, weight)
 VALUES (14,
         '70 lb basis weight rough vellum finish lightweight paper',
-        'Delaney');
+        'Delaney',
+        70);
 
 
-INSERT INTO product (product_id, name, created_by)
+INSERT INTO product (product_id, name, created_by, weight)
 VALUES (15,
         '80 lb basis weight rough vellum finish lightweight paper',
-        'Delaney');
+        'Delaney',
+        80);
 
 
 INSERT INTO client (client_id, name, description)
