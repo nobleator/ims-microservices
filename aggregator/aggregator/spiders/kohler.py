@@ -2,6 +2,8 @@
 Store scraped product information:
 local_product_id, source_product_id, sku_id, url, [data we care about], page_hash (for checking diffs), accessed_on
 
+Add dashboard for scheduled cron jobs and button to trigger now.
+
 scrapy shell "https://www.us.kohler.com/us/s?Ntt=k"
 response.xpath("//a/input[@name='skuId']/@value").getall()
 """
